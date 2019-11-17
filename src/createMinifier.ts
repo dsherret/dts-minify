@@ -45,31 +45,12 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
                 case ts.SyntaxKind.NewLineTrivia:
                     break;
                 case ts.SyntaxKind.SingleLineCommentTrivia:
-                    const tokenText = scanner.getTokenText();
-                    // todo: better check
-                    // simple check to just keep all triple slash comments in case they are a directive
-                    if (!tokenText.startsWith("///") || !tokenText.includes("<"))
-                        continue;
-
-                    writeText(tokenText);
-
-                    // write out the next newline as-is (this may be ts.SyntaxKind.EndOfFileToken)
-                    if (scanner.scan() === ts.SyntaxKind.NewLineTrivia)
-                        writeText(scanner.getTokenText());
-
+                    if (isTripleSlashDirective())
+                        writeTripleSlashDirective();
                     break;
                 case ts.SyntaxKind.MultiLineCommentTrivia: {
-                    if (stripJsDocs)
-                        continue; // don't bother checking futher
-
-                    const tokenText = scanner.getTokenText();
-                    const isJsDoc = tokenText.startsWith("/**");
-
-                    if (!isJsDoc)
-                        continue;
-
-                    // remove the leading whitespace on each line
-                    writeText(tokenText.replace(/^\s+\*/mg, " *"));
+                    if (!stripJsDocs && isJsDoc())
+                        writeJsDoc();
                     break;
                 }
                 default: {
@@ -79,6 +60,29 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
         }
 
         return result;
+
+        function isTripleSlashDirective() {
+            const tokenText = scanner.getTokenText();
+            // todo: better check
+            return tokenText.startsWith("///") && tokenText.includes("<");
+        }
+
+        function writeTripleSlashDirective() {
+            writeText(scanner.getTokenText());
+
+            // write out the next newline as-is (ex. write \n or \r\n)
+            if (scanner.scan() === ts.SyntaxKind.NewLineTrivia) // may be EndOfFileToken
+                writeText(scanner.getTokenText());
+        }
+
+        function isJsDoc() {
+            const tokenText = scanner.getTokenText();
+            return tokenText.startsWith("/**");
+        }
+
+        function writeJsDoc() {
+            writeText(scanner.getTokenText().replace(/^\s+\*/mg, " *"));
+        }
 
         function writeText(text: string) {
             const token = scanner.getToken();

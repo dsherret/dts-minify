@@ -8,7 +8,11 @@ Minifies TypeScript declaration files (`.d.ts` files).
 Strips:
 
 * Non-essential whitespace and newlines.
-* Non-js doc and non-type directive comments
+* Non-js doc and non-type directive comments.
+
+## Use Case
+
+This library is useful for minifying declaration files that won't be read by humans.
 
 ## Api
 
@@ -21,7 +25,7 @@ import { createMinifier } from "dts-minify";
 // setup (provide a TS Compiler API object)
 const minifier = createMinifier(ts);
 
-// use
+// minify
 const inputText = `declare class MyClass {
     /**
      * Some description.
