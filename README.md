@@ -1,7 +1,7 @@
 # dts-minify
 
 [![npm version](https://badge.fury.io/js/dts-minify.svg)](https://badge.fury.io/js/dts-minify)
-[![Build Status](https://travis-ci.org/dsherret/dts-minify.svg?branch=latest)](https://travis-ci.org/dsherret/dts-minify)
+[![Build Status](https://travis-ci.org/dsherret/dts-minify.svg?branch=master)](https://travis-ci.org/dsherret/dts-minify)
 
 Minifies TypeScript declaration files (`.d.ts` files).
 
