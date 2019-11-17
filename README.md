@@ -8,7 +8,7 @@ Minifies TypeScript declaration files (`.d.ts` files).
 Strips:
 
 * Non-essential whitespace and newlines.
-* Non-js doc and non-type directive comments.
+* Comments, but keeps type directives.
 
 ## Use Case
 
@@ -40,15 +40,25 @@ console.log(minifiedText);
 Outputs:
 
 ```ts
-declare class MyClass{/**
- * Some description.
- */doSomething(value:number):number;}
+declare class MyClass{doSomething(value:number):number;}
 ```
 
 ### Options
 
+#### `keepJsDocs`
+
+When true, it won't remove the JS docs.
+
 ```ts
 const minifiedText = minifier.minify(inputText, {
-    stripJsDocs: true // false by default
+    keepJsDocs: true // false by default
 });
+```
+
+Outputs:
+
+```ts
+declare class MyClass{/**
+ * Some description.
+ */doSomething(value:number):number;}
 ```

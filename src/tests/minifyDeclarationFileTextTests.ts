@@ -30,7 +30,6 @@ describe(nameof<Minifier>(), () => {
             ].join("\n"), [
                 `/// <reference lib="none" />\n`,
                 `/// <reference lib="none" />\r\n`,
-                "/**\n * Test\n * asdfa\n */",
                 "class Test{public prop:string|undefined;private readonly test:any;}",
                 "declare interface Test{method():void;}"
             ].join(""));
@@ -45,9 +44,10 @@ describe(nameof<Minifier>(), () => {
                 "/**\n      * Test\n    * asdfa\n */",
                 "class Test {}"
             ].join("\n"), [
+                "/**\n * Test\n * asdfa\n */",
                 "class Test{}"
             ].join(""), {
-                stripJsDocs: true
+                keepJsDocs: true
             });
         });
     });

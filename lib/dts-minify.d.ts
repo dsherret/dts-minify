@@ -7,7 +7,7 @@ export declare function createMinifier(ts: typeof import("typescript")): Minifie
  */
 export interface Minifier {
     /**
-     * Minifies the provided text.
+     * Removes non-essential whitespace, newlines, and comments from the provided text.
      * @param text - Text to minify.
      * @param options - Options for minifying.
      */
@@ -17,8 +17,8 @@ export interface Minifier {
 /** Options for minifying. */
 export interface MinifyOptions {
     /**
-     * Strip all the JS docs.
+     * Does not remove the JS docs when true.
      * @default false
      */
-    stripJsDocs?: boolean;
+    keepJsDocs?: boolean;
 }

@@ -1,6 +1,6 @@
 {
   "name": "dts-minify",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Minifier for TypeScript declaration files (.d.ts).",
   "main": "dist/dts-minify.js",
   "author": "David Sherret",

@@ -4,7 +4,7 @@
  */
 export interface Minifier {
     /**
-     * Minifies the provided text.
+     * Removes non-essential whitespace, newlines, and comments from the provided text.
      * @param text - Text to minify.
      * @param options - Options for minifying.
      */
@@ -14,10 +14,10 @@ export interface Minifier {
 /** Options for minifying. */
 export interface MinifyOptions {
     /**
-     * Strip all the JS docs.
+     * Does not remove the JS docs when true.
      * @default false
      */
-    stripJsDocs?: boolean;
+    keepJsDocs?: boolean;
 }
 
 /** Creates a minifier that should be stored and then used to minify one or multiple files. */
@@ -33,7 +33,7 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
     };
 
     function minify(text: string, options?: MinifyOptions) {
-        const stripJsDocs = options && options.stripJsDocs || false;
+        const keepJsDocs = options && options.keepJsDocs || false;
         let result = "";
         let lastWrittenToken: import("typescript").SyntaxKind | undefined;
 
@@ -49,7 +49,7 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
                         writeTripleSlashDirective();
                     break;
                 case ts.SyntaxKind.MultiLineCommentTrivia: {
-                    if (!stripJsDocs && isJsDoc())
+                    if (keepJsDocs && isJsDoc())
                         writeJsDoc();
                     break;
                 }
