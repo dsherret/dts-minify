@@ -1,4 +1,4 @@
-/** Creates a minifier that should be stored and then used to minify one or multiple files. */
+/** Creates a minifier that should be stored and then used to minify one or more files. */
 export declare function createMinifier(ts: typeof import("typescript")): Minifier;
 
 /**

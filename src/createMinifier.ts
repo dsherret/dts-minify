@@ -20,7 +20,7 @@ export interface MinifyOptions {
     keepJsDocs?: boolean;
 }
 
-/** Creates a minifier that should be stored and then used to minify one or multiple files. */
+/** Creates a minifier that should be stored and then used to minify one or more files. */
 export function createMinifier(ts: typeof import("typescript")): Minifier {
     const scanner = ts.createScanner(
         ts.ScriptTarget.Latest,
@@ -33,7 +33,7 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
     };
 
     function minify(text: string, options?: MinifyOptions) {
-        const keepJsDocs = options && options.keepJsDocs || false;
+        const keepJsDocs = options?.keepJsDocs ?? false;
         let result = "";
         let lastWrittenToken: import("typescript").SyntaxKind | undefined;
 
@@ -48,14 +48,12 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
                     if (isTripleSlashDirective())
                         writeTripleSlashDirective();
                     break;
-                case ts.SyntaxKind.MultiLineCommentTrivia: {
+                case ts.SyntaxKind.MultiLineCommentTrivia:
                     if (keepJsDocs && isJsDoc())
                         writeJsDoc();
                     break;
-                }
-                default: {
+                default:
                     writeText(scanner.getTokenText());
-                }
             }
         }
 
@@ -87,7 +85,7 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
         function writeText(text: string) {
             const token = scanner.getToken();
 
-            // Ensure two tokens that would merge into a single token are separated by a space.
+            // ensure two tokens that would merge into a single token are separated by a space
             if (lastWrittenToken != null && isAlphaNumericToken(token) && isAlphaNumericToken(lastWrittenToken))
                 result += " ";
 
