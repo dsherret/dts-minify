@@ -33,7 +33,7 @@ describe(nameof<Minifier>(), () => {
                 "/**\n * Test\n * asdfa\n */",
                 "class Test{public prop:string|undefined;private readonly test:any;}",
                 "declare interface Test{method():void;}"
-            ].join(""))
+            ].join(""));
         });
 
         it("should write a type reference directive on the last line that has no newline", () => {
@@ -48,7 +48,7 @@ describe(nameof<Minifier>(), () => {
                 "class Test{}"
             ].join(""), {
                 stripJsDocs: true
-            })
+            });
         });
     });
 });

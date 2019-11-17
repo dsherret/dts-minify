@@ -10,18 +10,21 @@
   "scripts": {
     "build": "rimraf dist && yarn rollup && yarn build:declarations",
     "build:declarations": "ts-node --compiler ttypescript --project scripts/tsconfig.json --transpile-only scripts/buildDeclarations.ts",
+    "format": "dprint",
     "test": "cross-env TS_NODE_COMPILER=\"ttypescript\" TS_NODE_TRANSPILE_ONLY=\"true\" mocha --opts mocha.opts",
     "test:debug": "yarn test --inspect-brk",
     "rollup": "rollup --config"
   },
   "devDependencies": {
-    "typescript": "~3.7.2",
     "@types/chai": "^4.2.4",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.6",
     "@types/ts-nameof": "^4.0.0",
     "chai": "^4.2.0",
     "cross-env": "^6.0.3",
+    "dprint": "^0.7.3",
+    "dprint-plugin-jsonc": "^0.2.4",
+    "dprint-plugin-typescript": "^0.10.0",
     "mocha": "^6.2.2",
     "rimraf": "^3.0.0",
     "rollup": "^1.26.3",
@@ -29,6 +32,7 @@
     "ts-morph": "npm:ts-morph@5.0.0",
     "ts-nameof": "^4.1.0",
     "ts-node": "^8.4.1",
-    "ttypescript": "^1.5.8"
+    "ttypescript": "^1.5.8",
+    "typescript": "~3.7.2"
   }
 }

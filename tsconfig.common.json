@@ -1,5 +1,5 @@
 {
-"compilerOptions": {
+  "compilerOptions": {
     "target": "es2015",
     "module": "commonjs",
     "strict": true,
@@ -12,6 +12,6 @@
     "noImplicitReturns": true,
     "stripInternal": true,
     "importHelpers": false
-},
-"compileOnSave": false
+  },
+  "compileOnSave": false
 }
