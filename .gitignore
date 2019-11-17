@@ -1,0 +1,8 @@
+/node_modules
+/bin
+/dist
+/obj
+/temp
+*.js.map
+/yarn-error.log
+*.tsbuildinfo
