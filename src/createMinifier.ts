@@ -46,7 +46,7 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
                     break;
                 case ts.SyntaxKind.SingleLineCommentTrivia:
                     if (isTripleSlashDirective())
-                        writeTripleSlashDirective();
+                        writeSingleLineComment();
                     break;
                 case ts.SyntaxKind.MultiLineCommentTrivia:
                     if (keepJsDocs && isJsDoc())
@@ -65,12 +65,15 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
             return tokenText.startsWith("///") && tokenText.includes("<");
         }
 
-        function writeTripleSlashDirective() {
+        function writeSingleLineComment() {
             writeText(scanner.getTokenText());
 
             // write out the next newline as-is (ex. write \n or \r\n)
-            if (scanner.scan() === ts.SyntaxKind.NewLineTrivia) // may be EndOfFileToken
+            const nextToken = scanner.scan();
+            if (nextToken === ts.SyntaxKind.NewLineTrivia)
                 writeText(scanner.getTokenText());
+            else if (nextToken !== ts.SyntaxKind.EndOfFileToken)
+                throw new Error(`Unexpected scenario where the token after a comment was a ${nextToken}.`);
         }
 
         function isJsDoc() {
