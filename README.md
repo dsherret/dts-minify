@@ -8,7 +8,7 @@ Minifies TypeScript declaration files (`.d.ts` files).
 Strips:
 
 - Non-essential whitespace and newlines.
-- Comments, but keeps type directives.
+- Comments, but keeps triple-slash directives.
 
 ## Use Case
 
