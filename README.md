@@ -7,8 +7,8 @@ Minifies TypeScript declaration files (`.d.ts` files).
 
 Strips:
 
-* Non-essential whitespace and newlines.
-* Comments, but keeps type directives.
+- Non-essential whitespace and newlines.
+- Comments, but keeps type directives.
 
 ## Use Case
 
@@ -16,7 +16,7 @@ This library is useful for minifying declaration files that won't be read by hum
 
 ## Api
 
-* [Declarations](lib/dts-minify.d.ts)
+- [Declarations](lib/dts-minify.d.ts)
 
 ```ts
 import * as ts from "typescript";
@@ -39,6 +39,8 @@ console.log(minifiedText);
 
 Outputs:
 
+<!-- dprint-ignore -->
+
 ```ts
 declare class MyClass{doSomething(value:number):number;}
 ```
@@ -51,11 +53,13 @@ When true, it won't remove the JS docs.
 
 ```ts
 const minifiedText = minifier.minify(inputText, {
-    keepJsDocs: true // false by default
+    keepJsDocs: true, // false by default
 });
 ```
 
 Outputs:
+
+<!-- dprint-ignore -->
 
 ```ts
 declare class MyClass{/**

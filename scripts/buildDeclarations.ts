@@ -5,8 +5,8 @@ const declarationProject = createDeclarationProject();
 const emitMainFile = declarationProject.getSourceFileOrThrow("./dist/index.d.ts");
 const writeProject = new Project({
     manipulationSettings: {
-        newLineKind: NewLineKind.CarriageReturnLineFeed
-    }
+        newLineKind: NewLineKind.CarriageReturnLineFeed,
+    },
 });
 const declarationFile = writeProject.addSourceFileAtPath("lib/dts-minify.d.ts");
 const writer = declarationProject.createWriter();
@@ -33,14 +33,14 @@ if (diagnostics.length > 0) {
 function createDeclarationProject() {
     const project = new Project({
         tsConfigFilePath: path.join(__dirname, "../tsconfig.json"),
-        compilerOptions: { declaration: true }
+        compilerOptions: { declaration: true },
     });
     const result = project.emitToMemory({
-        emitOnlyDtsFiles: true
+        emitOnlyDtsFiles: true,
     });
     const declarationProject = new Project({
         tsConfigFilePath: path.join(__dirname, "../tsconfig.json"),
-        addFilesFromTsConfig: false
+        addFilesFromTsConfig: false,
     });
     for (const emittedFile of result.getFiles())
         declarationProject.createSourceFile(emittedFile.filePath, emittedFile.text);

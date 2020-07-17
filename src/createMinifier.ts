@@ -25,11 +25,11 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
     const scanner = ts.createScanner(
         ts.ScriptTarget.Latest,
         /* skipTrivia */ false,
-        ts.LanguageVariant.Standard
+        ts.LanguageVariant.Standard,
     );
 
     return {
-        minify
+        minify,
     };
 
     function minify(text: string, options?: MinifyOptions) {

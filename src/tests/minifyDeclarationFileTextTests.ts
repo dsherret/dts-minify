@@ -21,18 +21,21 @@ describe(nameof<Minifier>(), () => {
         }
 
         it("should minify the provided text", () => {
-            doTest([
-                ` /// <reference lib="none" />\n/// <reference lib="none" />\r\n`,
-                "/* asdfasdf */ //testing",
-                "/**\n      * Test\n    * asdfa\n */",
-                "class Test {\npublic prop: string | undefined; private readonly test: any; }",
-                "declare interface   Test  {\nmethod() : void; }"
-            ].join("\n"), [
-                `/// <reference lib="none" />\n`,
-                `/// <reference lib="none" />\r\n`,
-                "class Test{public prop:string|undefined;private readonly test:any;}",
-                "declare interface Test{method():void;}"
-            ].join(""));
+            doTest(
+                [
+                    ` /// <reference lib="none" />\n/// <reference lib="none" />\r\n`,
+                    "/* asdfasdf */ //testing",
+                    "/**\n      * Test\n    * asdfa\n */",
+                    "class Test {\npublic prop: string | undefined; private readonly test: any; }",
+                    "declare interface   Test  {\nmethod() : void; }",
+                ].join("\n"),
+                [
+                    `/// <reference lib="none" />\n`,
+                    `/// <reference lib="none" />\r\n`,
+                    "class Test{public prop:string|undefined;private readonly test:any;}",
+                    "declare interface Test{method():void;}",
+                ].join(""),
+            );
         });
 
         it("should write a type reference directive on the last line that has no newline", () => {
@@ -40,15 +43,19 @@ describe(nameof<Minifier>(), () => {
         });
 
         it("should strip jsdocs when specified to", () => {
-            doTest([
-                "/**\n      * Test\n    * asdfa\n */",
-                "class Test {}"
-            ].join("\n"), [
-                "/**\n * Test\n * asdfa\n */",
-                "class Test{}"
-            ].join(""), {
-                keepJsDocs: true
-            });
+            doTest(
+                [
+                    "/**\n      * Test\n    * asdfa\n */",
+                    "class Test {}",
+                ].join("\n"),
+                [
+                    "/**\n * Test\n * asdfa\n */",
+                    "class Test{}",
+                ].join(""),
+                {
+                    keepJsDocs: true,
+                },
+            );
         });
     });
 });
