@@ -1,12 +1,10 @@
 /scripts
 /src
 azure-pipelines.yml
-mocha.opts
 .npmignore
 .travis.yml
 CHANGELOG.md
 CODE_OF_CONDUCT.md
-dprint.config.js
 rollup.config.js
 tsconfig.json
 tsconfig.*.json
@@ -14,3 +12,6 @@ yarn-error.log
 # do not include lock files in order to not restrict the typescript version
 yarn.lock
 package-lock.json
+.dprintrc.json
+.mocharc.yml
+.vscode
