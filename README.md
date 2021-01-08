@@ -19,8 +19,8 @@ This library is useful for minifying declaration files that won't be read by hum
 - [Declarations](lib/dts-minify.d.ts)
 
 ```ts
-import * as ts from "typescript";
 import { createMinifier } from "dts-minify";
+import * as ts from "typescript";
 
 // setup (provide a TS Compiler API object)
 const minifier = createMinifier(ts);
