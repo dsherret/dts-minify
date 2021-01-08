@@ -72,6 +72,7 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
                         && lastWrittenToken !== ts.SyntaxKind.OpenBraceToken
                         && lastWrittenToken !== ts.SyntaxKind.OpenParenToken
                         && lastWrittenToken !== ts.SyntaxKind.CommaToken
+                        && lastWrittenToken !== ts.SyntaxKind.ColonToken
                     ) {
                         result += "\n";
                     }
