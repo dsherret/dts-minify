@@ -70,6 +70,8 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
                         && lastWrittenToken !== ts.SyntaxKind.SemicolonToken
                         && lastWrittenToken !== ts.SyntaxKind.CloseBraceToken
                         && lastWrittenToken !== ts.SyntaxKind.OpenBraceToken
+                        && lastWrittenToken !== ts.SyntaxKind.OpenParenToken
+                        && lastWrittenToken !== ts.SyntaxKind.CommaToken
                     ) {
                         result += "\n";
                     }

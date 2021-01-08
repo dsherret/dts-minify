@@ -67,14 +67,19 @@ describe(nameof<Minifier>(), () => {
                     `interface Test {`,
                     "  test(): U",
                     "  test2(): U[]",
-                    "  asdf(): other",
+                    "  asdf(): other;",
+                    "  test(",
+                    "    other,",
+                    "    test2): void",
                     "}",
                 ].join("\n"),
                 [
                     `interface Test{`,
                     `test():U\n`,
                     `test2():U[]\n`,
-                    `asdf():other}`,
+                    `asdf():other;`,
+                    "test(other,test2):void",
+                    "}",
                 ].join(""),
             );
         });
