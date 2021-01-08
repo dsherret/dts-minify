@@ -20,6 +20,8 @@ export interface MinifyOptions {
     keepJsDocs?: boolean;
 }
 
+const newLineCharCode = "\n".charCodeAt(0);
+
 /** Creates a minifier that should be stored and then used to minify one or more files. */
 export function createMinifier(ts: typeof import("typescript")): Minifier {
     const scanner = ts.createScanner(
@@ -32,28 +34,48 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
         minify,
     };
 
-    function minify(text: string, options?: MinifyOptions) {
+    function minify(fileText: string, options?: MinifyOptions) {
         const keepJsDocs = options?.keepJsDocs ?? false;
         let result = "";
         let lastWrittenToken: import("typescript").SyntaxKind | undefined;
+        let lastHadSeparatingNewLine = false;
 
-        scanner.setText(text);
+        scanner.setText(fileText);
 
         while (scanner.scan() !== ts.SyntaxKind.EndOfFileToken) {
-            switch (scanner.getToken()) {
-                case ts.SyntaxKind.WhitespaceTrivia:
+            const currentToken = scanner.getToken();
+            switch (currentToken) {
                 case ts.SyntaxKind.NewLineTrivia:
+                    lastHadSeparatingNewLine = true;
+                    break;
+                case ts.SyntaxKind.WhitespaceTrivia:
                     break;
                 case ts.SyntaxKind.SingleLineCommentTrivia:
-                    if (isTripleSlashDirective())
+                    if (isTripleSlashDirective()) {
                         writeSingleLineComment();
+                        lastHadSeparatingNewLine = false;
+                    }
                     break;
                 case ts.SyntaxKind.MultiLineCommentTrivia:
-                    if (keepJsDocs && isJsDoc())
+                    if (keepJsDocs && isJsDoc()) {
                         writeJsDoc();
+                        lastHadSeparatingNewLine = false;
+                    }
                     break;
                 default:
+                    // use a newline where ASI is probable
+                    if (
+                        currentToken === ts.SyntaxKind.Identifier
+                        && lastHadSeparatingNewLine
+                        && lastWrittenToken !== ts.SyntaxKind.SemicolonToken
+                        && lastWrittenToken !== ts.SyntaxKind.CloseBraceToken
+                        && lastWrittenToken !== ts.SyntaxKind.OpenBraceToken
+                    ) {
+                        result += "\n";
+                    }
+
                     writeText(scanner.getTokenText());
+                    lastHadSeparatingNewLine = false;
             }
         }
 
@@ -70,10 +92,11 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
 
             // write out the next newline as-is (ex. write \n or \r\n)
             const nextToken = scanner.scan();
-            if (nextToken === ts.SyntaxKind.NewLineTrivia)
+            if (nextToken === ts.SyntaxKind.NewLineTrivia) {
                 writeText(scanner.getTokenText());
-            else if (nextToken !== ts.SyntaxKind.EndOfFileToken)
+            } else if (nextToken !== ts.SyntaxKind.EndOfFileToken) {
                 throw new Error(`Unexpected scenario where the token after a comment was a ${nextToken}.`);
+            }
         }
 
         function isJsDoc() {
@@ -89,17 +112,28 @@ export function createMinifier(ts: typeof import("typescript")): Minifier {
             const token = scanner.getToken();
 
             // ensure two tokens that would merge into a single token are separated by a space
-            if (lastWrittenToken != null && isAlphaNumericToken(token) && isAlphaNumericToken(lastWrittenToken))
+            if (
+                lastWrittenToken != null
+                && isAlphaNumericToken(token)
+                && isAlphaNumericToken(lastWrittenToken)
+                && !wasLastWrittenNewLine()
+            ) {
                 result += " ";
+            }
 
             result += text;
             lastWrittenToken = token;
         }
+
+        function wasLastWrittenNewLine() {
+            return result.charCodeAt(result.length - 1) === newLineCharCode;
+        }
     }
 
     function isAlphaNumericToken(token: import("typescript").SyntaxKind) {
-        if (token >= ts.SyntaxKind.FirstKeyword && token <= ts.SyntaxKind.LastKeyword)
+        if (token >= ts.SyntaxKind.FirstKeyword && token <= ts.SyntaxKind.LastKeyword) {
             return true;
+        }
         return token === ts.SyntaxKind.Identifier;
     }
 }

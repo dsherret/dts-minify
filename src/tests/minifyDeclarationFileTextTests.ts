@@ -1,7 +1,7 @@
-import * as ts from "typescript";
-import { Project } from "ts-morph";
-import { createMinifier, Minifier, MinifyOptions } from "../createMinifier";
 import { expect } from "chai";
+import { Project } from "ts-morph";
+import * as ts from "typescript";
+import { createMinifier, Minifier, MinifyOptions } from "../createMinifier";
 
 // todo: more tests... I created this project really late at night
 
@@ -17,7 +17,10 @@ describe(nameof<Minifier>(), () => {
 
             // test for any syntax errors
             project.createSourceFile("test.d.ts", result, { overwrite: true });
-            expect(project.getProgram().getSyntacticDiagnostics().map(d => d.getMessageText())).to.deep.equal([], "checking for syntax errors");
+            expect(project.getProgram().getSyntacticDiagnostics().map(d => d.getMessageText())).to.deep.equal(
+                [],
+                "checking for syntax errors",
+            );
         }
 
         it("should minify the provided text", () => {
@@ -55,6 +58,24 @@ describe(nameof<Minifier>(), () => {
                 {
                     keepJsDocs: true,
                 },
+            );
+        });
+
+        it("should separate with a newline when ASI is probable", () => {
+            doTest(
+                [
+                    `interface Test {`,
+                    "  test(): U",
+                    "  test2(): U[]",
+                    "  asdf(): other",
+                    "}",
+                ].join("\n"),
+                [
+                    `interface Test{`,
+                    `test():U\n`,
+                    `test2():U[]\n`,
+                    `asdf():other}`,
+                ].join(""),
             );
         });
     });
