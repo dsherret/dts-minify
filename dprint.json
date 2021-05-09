@@ -10,8 +10,8 @@
     "**/*-lock.json"
   ],
   "plugins": [
-    "https://plugins.dprint.dev/typescript-0.38.1.wasm",
-    "https://plugins.dprint.dev/json-0.7.2.wasm",
-    "https://plugins.dprint.dev/markdown-0.4.3.wasm"
+    "https://plugins.dprint.dev/typescript-0.45.0.wasm",
+    "https://plugins.dprint.dev/json-0.10.2.wasm",
+    "https://plugins.dprint.dev/markdown-0.7.1.wasm"
   ]
 }
