@@ -15,9 +15,7 @@ Strips:
 
 This library is useful for minifying declaration files that won't be read by humans.
 
-## Api
-
-- [Declarations](lib/dts-minify.d.ts)
+## Example
 
 ```ts
 import { createMinifier } from "dts-minify";

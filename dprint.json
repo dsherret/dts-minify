@@ -1,7 +1,8 @@
 {
   "incremental": true,
-  "includes": ["**/*.{ts,tsx,js,jsx,json,md}"],
   "indentWidth": 2,
+  "includes": ["**/*.{ts,tsx,js,jsx,json,md}"],
+  "excludes": ["**/npm"],
   "plugins": [
     "https://plugins.dprint.dev/typescript-0.59.2.wasm",
     "https://plugins.dprint.dev/json-0.13.2.wasm",
