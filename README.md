@@ -2,6 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/dts-minify.svg)](https://badge.fury.io/js/dts-minify)
 [![CI](https://github.com/dsherret/dts-minify/workflows/CI/badge.svg)](https://github.com/dsherret/dts-minify/actions?query=workflow%3ACI)
+[![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/dts_minify/mod.ts)
 
 Minifies TypeScript declaration files (`.d.ts` files).
 
@@ -14,9 +15,7 @@ Strips:
 
 This library is useful for minifying declaration files that won't be read by humans.
 
-## Api
-
-- [Declarations](lib/dts-minify.d.ts)
+## Example
 
 ```ts
 import { createMinifier } from "dts-minify";
@@ -53,7 +52,7 @@ When true, it won't remove the JS docs.
 
 ```ts
 const minifiedText = minifier.minify(inputText, {
-    keepJsDocs: true, // false by default
+  keepJsDocs: true, // false by default
 });
 ```
 
