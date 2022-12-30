@@ -1,9 +1,9 @@
-import { build } from "https://deno.land/x/dnt@0.6.0/mod.ts";
+import { build } from "https://deno.land/x/dnt@0.32.1/mod.ts";
 
 await build({
   entryPoints: ["./mod.ts"],
   outDir: "./npm",
-  test: false, // wait for ts-morph to be distributed as an es module
+  test: true,
   package: {
     name: "dts-minify",
     version: Deno.args[0],
@@ -13,10 +13,15 @@ await build({
     license: "MIT",
     repository: "git+https://github.com/dsherret/dts_minify.git",
   },
+  shims: {
+    deno: {
+      test: "dev",
+    },
+  },
   mappings: {
-    "https://deno.land/x/ts_morph@12.2.0/mod.ts": {
+    "https://deno.land/x/ts_morph@17.0.1/mod.ts": {
       name: "ts-morph",
-      version: "12.2.0",
+      version: "17.0.1",
     },
   },
 });

@@ -1,5 +1,5 @@
-import { assertEquals } from "https://deno.land/std@0.114.0/testing/asserts.ts";
-import { Project, ts } from "https://deno.land/x/ts_morph@12.2.0/mod.ts";
+import { assertEquals } from "https://deno.land/std@0.170.0/testing/asserts.ts";
+import { Project, ts } from "https://deno.land/x/ts_morph@17.0.1/mod.ts";
 import { createMinifier, MinifyOptions } from "./mod.ts";
 
 // todo: more tests... I created this project really late at night
