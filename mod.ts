@@ -67,14 +67,14 @@ export function createMinifier(ts: any): Minifier {
         default:
           // use a newline where ASI is probable
           if (
-            currentToken === ts.SyntaxKind.Identifier
-            && lastHadSeparatingNewLine
-            && lastWrittenToken !== ts.SyntaxKind.SemicolonToken
-            && lastWrittenToken !== ts.SyntaxKind.CloseBraceToken
-            && lastWrittenToken !== ts.SyntaxKind.OpenBraceToken
-            && lastWrittenToken !== ts.SyntaxKind.OpenParenToken
-            && lastWrittenToken !== ts.SyntaxKind.CommaToken
-            && lastWrittenToken !== ts.SyntaxKind.ColonToken
+            currentToken === ts.SyntaxKind.Identifier &&
+            lastHadSeparatingNewLine &&
+            lastWrittenToken !== ts.SyntaxKind.SemicolonToken &&
+            lastWrittenToken !== ts.SyntaxKind.CloseBraceToken &&
+            lastWrittenToken !== ts.SyntaxKind.OpenBraceToken &&
+            lastWrittenToken !== ts.SyntaxKind.OpenParenToken &&
+            lastWrittenToken !== ts.SyntaxKind.CommaToken &&
+            lastWrittenToken !== ts.SyntaxKind.ColonToken
           ) {
             result += "\n";
           }
@@ -100,7 +100,9 @@ export function createMinifier(ts: any): Minifier {
       if (nextToken === ts.SyntaxKind.NewLineTrivia) {
         writeText(scanner.getTokenText());
       } else if (nextToken !== ts.SyntaxKind.EndOfFileToken) {
-        throw new Error(`Unexpected scenario where the token after a comment was a ${nextToken}.`);
+        throw new Error(
+          `Unexpected scenario where the token after a comment was a ${nextToken}.`,
+        );
       }
     }
 
@@ -118,10 +120,10 @@ export function createMinifier(ts: any): Minifier {
 
       // ensure two tokens that would merge into a single token are separated by a space
       if (
-        lastWrittenToken != null
-        && isAlphaNumericToken(token)
-        && isAlphaNumericToken(lastWrittenToken)
-        && !wasLastWrittenNewLine()
+        lastWrittenToken != null &&
+        isAlphaNumericToken(token) &&
+        isAlphaNumericToken(lastWrittenToken) &&
+        !wasLastWrittenNewLine()
       ) {
         result += " ";
       }
@@ -136,7 +138,9 @@ export function createMinifier(ts: any): Minifier {
   }
 
   function isAlphaNumericToken(token: number) {
-    if (token >= ts.SyntaxKind.FirstKeyword && token <= ts.SyntaxKind.LastKeyword) {
+    if (
+      token >= ts.SyntaxKind.FirstKeyword && token <= ts.SyntaxKind.LastKeyword
+    ) {
       return true;
     }
     return token === ts.SyntaxKind.Identifier;
