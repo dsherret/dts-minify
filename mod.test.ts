@@ -6,14 +6,23 @@ import { createMinifier, MinifyOptions } from "./mod.ts";
 const minifier = createMinifier(ts);
 const project = new Project();
 
-function doTest(inputText: string, expectedText: string, options?: MinifyOptions) {
+function doTest(
+  inputText: string,
+  expectedText: string,
+  options?: MinifyOptions,
+) {
   const result = minifier.minify(inputText, options);
   // test for equality
   assertEquals(result, expectedText);
 
   // test for any syntax errors
   project.createSourceFile("test.d.ts", result, { overwrite: true });
-  assertEquals(project.getProgram().getSyntacticDiagnostics().map(d => d.getMessageText()), []);
+  assertEquals(
+    project.getProgram().getSyntacticDiagnostics().map((d) =>
+      d.getMessageText()
+    ),
+    [],
+  );
 }
 
 Deno.test("should minify the provided text", () => {

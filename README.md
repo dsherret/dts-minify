@@ -13,7 +13,8 @@ Strips:
 
 ## Use Case
 
-This library is useful for minifying declaration files that won't be read by humans.
+This library is useful for minifying declaration files that won't be read by
+humans.
 
 ## Example
 
@@ -38,7 +39,7 @@ console.log(minifiedText);
 
 Outputs:
 
-<!-- dprint-ignore -->
+<!-- deno-fmt-ignore -->
 
 ```ts
 declare class MyClass{doSomething(value:number):number;}
@@ -58,7 +59,7 @@ const minifiedText = minifier.minify(inputText, {
 
 Outputs:
 
-<!-- dprint-ignore -->
+<!-- deno-fmt-ignore -->
 
 ```ts
 declare class MyClass{/**
