@@ -1,9 +1,10 @@
-import { build } from "https://deno.land/x/dnt@0.32.1/mod.ts";
+import { build } from "@deno/dnt";
 
 await build({
   entryPoints: ["./mod.ts"],
   outDir: "./npm",
   test: true,
+  importMap: "./deno.json",
   package: {
     name: "dts-minify",
     version: Deno.args[0],
@@ -15,12 +16,6 @@ await build({
   shims: {
     deno: {
       test: "dev",
-    },
-  },
-  mappings: {
-    "https://deno.land/x/ts_morph@17.0.1/mod.ts": {
-      name: "ts-morph",
-      version: "17.0.1",
     },
   },
 });
