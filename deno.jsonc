@@ -1,7 +1,8 @@
 {
   "tasks": {
-    "test": "deno test --allow-read=./",
-    "format": "deno fmt --ignore=npm",
-    "build:npm": "deno run --allow-env --allow-read --allow-write --allow-net --allow-run scripts/build_npm.ts"
-  }
+    "build:npm": "deno run -A scripts/build_npm.ts"
+  },
+  "exclude": [
+    "npm"
+  ]
 }
